@@ -1,4 +1,4 @@
-﻿using UnityEngine.SceneManagement;
+﻿ using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class RocketController : MonoBehaviour {
@@ -88,7 +88,7 @@ public class RocketController : MonoBehaviour {
     }
 
     private void ThrustInputResponse() {
-        if ( (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.LeftShift)))
+        if (Input.GetKey(KeyCode.S))
             ApplyThrust(-1);
         else if (Input.GetKey(KeyCode.Space))
             ApplyThrust(1);
