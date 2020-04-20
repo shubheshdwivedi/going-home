@@ -35,4 +35,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Winning.unity
     guid: 966d3541d84694d4ea2de483f94695f2
+  - enabled: 1
+    path: Assets/Scenes/How to Play.unity
+    guid: 6bdae0d27a0062046bf7326320d23ce3
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: e182ec0652eb35044a6446d728f836f2
   m_configObjects: {}

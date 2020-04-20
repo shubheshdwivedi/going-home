@@ -12,26 +12,32 @@ public class RocketController : MonoBehaviour {
     [SerializeField] private ParticleSystem mainEngineParticles;
     [SerializeField] private ParticleSystem successParticles;
     [SerializeField] private ParticleSystem deathParticles;
-    
+
     private Rigidbody _rigidbody;
-    private AudioSource _audioSource; 
+    private AudioSource _audioSource;
+    private int _scene;
 
     enum State{
         Alive, Transcending, Dying
         };
 
     private State _state = State.Alive;
-    // Start is called before the first frame update
+   
     void Start() {
         _rigidbody = GetComponent<Rigidbody>();
         _audioSource = GetComponent<AudioSource>();
+        _scene = SceneManager.GetActiveScene().buildIndex;
     }
 
-    // Update is called once per frame
+   
     void Update() {
-        if(_state == State.Alive)
-            ProcessInput(); 
+        PlayerPrefs.SetInt("scene", _scene);
+        if (_state == State.Alive) {
+            ProcessInput();
+        }
     }
+
+    
 
     private void OnCollisionEnter(Collision other) {
         if(_state != State.Alive)
@@ -52,6 +58,8 @@ public class RocketController : MonoBehaviour {
     private void StartDeathSequence() {
         _state = State.Dying;
         _audioSource.Stop();
+        if (!deathParticles.isPlaying)
+            deathParticles.Play();
         _audioSource.PlayOneShot(deathAudio);
         Invoke(nameof(LoadCurrentLevel), 1f);
     }
@@ -59,20 +67,20 @@ public class RocketController : MonoBehaviour {
     private void StartSuccessSequence() {
         _state = State.Transcending;
         _audioSource.Stop();
+        if (!successParticles.isPlaying)
+            successParticles.Play();
         _audioSource.PlayOneShot(successAudio);
         successParticles.Play(); 
         Invoke(nameof(LoadNextScene), 1f);
     }
 
     private void LoadCurrentLevel() {
-        int scene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene(_scene);
     }
 
     private void LoadNextScene() {
-        int scene = SceneManager.GetActiveScene().buildIndex;
-        PlayerPrefs.SetInt("scene", scene+1);
-        SceneManager.LoadScene(scene+1);
+        PlayerPrefs.SetInt("scene", _scene + 1);
+        SceneManager.LoadScene(_scene + 1);
     }
 
     private void ProcessInput() {
@@ -102,12 +110,10 @@ public class RocketController : MonoBehaviour {
     }
 
     private void ApplyThrust(int direction) {
-        print(mainEngineParticles.isPlaying);
         if(!mainEngineParticles.isPlaying)
             mainEngineParticles.Play();
         _rigidbody.AddRelativeForce(mainThrust * direction * Vector3.up);
         if (!_audioSource.isPlaying)
             _audioSource.PlayOneShot(mainEngineAudio);
-        print(mainEngineParticles.isPlaying);
     }
 }

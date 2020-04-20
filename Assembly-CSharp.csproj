@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Camera.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Oscillator.cs" />
+    <Compile Include="Assets\Scripts\Pausemenu.cs" />
     <Compile Include="Assets\Scripts\RocketController.cs" />
     <Compile Include="Assets\Scripts\Rotator.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />

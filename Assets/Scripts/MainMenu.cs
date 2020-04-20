@@ -8,9 +8,13 @@ public class MainMenu : MonoBehaviour
     private int scene = 1;
     
    public void PlayGame() {
+        print(scene);
         int sceneToContinue = PlayerPrefs.GetInt("scene");
+        print(sceneToContinue);
         if (sceneToContinue != 0 && sceneToContinue != 9)
             scene = sceneToContinue;
+        else
+            PlayerPrefs.SetInt("scene", scene);
         SceneManager.LoadScene(scene);
     }
 
