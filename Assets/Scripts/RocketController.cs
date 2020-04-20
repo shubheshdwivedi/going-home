@@ -1,4 +1,4 @@
-﻿ using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class RocketController : MonoBehaviour {
@@ -53,7 +53,7 @@ public class RocketController : MonoBehaviour {
         _state = State.Dying;
         _audioSource.Stop();
         _audioSource.PlayOneShot(deathAudio);
-        Invoke(nameof(LoadFirstLevel), 1f);
+        Invoke(nameof(LoadCurrentLevel), 1f);
     }
 
     private void StartSuccessSequence() {
@@ -64,12 +64,15 @@ public class RocketController : MonoBehaviour {
         Invoke(nameof(LoadNextScene), 1f);
     }
 
-    private void LoadFirstLevel() {
-        SceneManager.LoadScene(0);
+    private void LoadCurrentLevel() {
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(scene);
     }
 
     private void LoadNextScene() {
-        SceneManager.LoadScene(1);
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        PlayerPrefs.SetInt("scene", scene+1);
+        SceneManager.LoadScene(scene+1);
     }
 
     private void ProcessInput() {
